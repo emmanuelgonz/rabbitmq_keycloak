@@ -253,3 +253,16 @@ To manage 2FA applications, navigate to "Signing in" > "Two-factor authenticatio
 
 <p align="center"><img src="images/2fa_settings.png" width="900"></p>
 <p align="center"><i>Keycloak account management user interface sign in settings, including 2FA.</i></p>
+
+## Testing Pika with OTP-based 2FA
+
+To test OTP-based 2FA, you must install dependencies:
+
+```bash
+python3 -m pip install pika requests python-keycloak
+```
+
+Ensure you are in the ```test``` realm. Navigate to "Clients" > select "producer" > scroll to "Capability config". Make sure "Client authentication" is enabled, and "Direct access grants" is selected.
+
+<p align="center"><img src="images/auth_settings.png" width="900"></p>
+<p align="center"><i>Enabling 2FA for AMQP protocol access using the Python package Pika.</i></p>
