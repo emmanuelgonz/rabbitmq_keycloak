@@ -242,7 +242,7 @@ Once the user completes the set up, they will have access to RabbitMQ.
 
 ### Account Management
 
-The Keycloak Account Management user interface enables users to manage their accounts.
+The Keycloak Account Management user interface enables users to manage their Authenticator applications.
 
 Navigate to http://localhost:8080/realms/test/account/#
 
@@ -252,4 +252,4 @@ Navigate to http://localhost:8080/realms/test/account/#
 To manage 2FA applications, navigate to "Signing in" > "Two-factor authentication."
 
 <p align="center"><img src="images/2fa_settings.png" width="900"></p>
-<p align="center"><i>Keycloak account management user interface.</i></p>
+<p align="center"><i>Keycloak account management user interface sign in settings, including 2FA.</i></p>
