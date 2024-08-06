@@ -266,3 +266,13 @@ Ensure you are in the ```test``` realm. Navigate to "Clients" > select "producer
 
 <p align="center"><img src="images/auth_settings.png" width="900"></p>
 <p align="center"><i>Enabling 2FA for AMQP protocol access using the Python package Pika.</i></p>
+
+Then, make sure to assign your user the ```producer``` role. Navigate to "Users" > select user > "Role mapping" > "Assign role" > check "producer."
+
+<p align="center"><img src="images/select_roles.png" width="900"></p>
+<p align="center"><i>Set the correct roles to your user to enable 2FA using Pika.</i></p>
+
+You will now see the ```producer``` role under your user.
+
+<p align="center"><img src="images/roles.png" width="900"></p>
+<p align="center"><i>Set the correct roles to your user to enable 2FA using Pika.</i></p>
