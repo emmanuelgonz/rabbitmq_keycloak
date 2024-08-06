@@ -10,7 +10,18 @@ This page shows how to configure a new standalone RabbitMQ broker on a local hos
 
 The transition from Solace PubSub+ Standard Edition to RabbitMQ was primarily driven by RabbitMQ's advanced queueing capabilities and its open-source nature. Furthermore, updates to NASA's Science Managed Cloud Environment (SMCE) requirements now include two-factor authentication (2FA). Keycloak, an Identity and Access Management (IAM) software, was chosen as the OAuth 2.0 provider due to its open-source nature and robust 2FA capabilities.
 
-## Instructions
+## OAuth 2.0 Authentication Workflow
+
+When an end user first accesses the management user interface and clicks the "Click here to login" button, they are redirected to the OAuth 2.0 provider for authentication. After successfully authenticating, the user is redirected back to RabbitMQ with a valid JWT token. RabbitMQ then validates the token, identifies the user, and extracts their permissions from the JWT token.
+
+> **Note:**
+> The token is passed as a parameter to RabbitMQ commands. However, the connection cannot be used beyond the token’s lifespan, so token refresh is necessary for long-lived connections.
+
+
+<p align="center"><img src="images/rabbitmq-keycloak.png" width="900"></p>
+<p align="center"><i>OAuth 2.0 workflow integrating RabbitMQ as the event broker and Keycloak as the IAM and OAuth 2.0 provider.</i></p>
+
+## Keycloak & RabbitMQ Setup Instructions
 
 Below are instructions for configuring and deploying Keycloak and RabbitMQ.
 
@@ -155,13 +166,90 @@ python3 pika-client/producer.py <client ID> <client secret key>
 python3 pika-client/producer.py producer kbOFBXI9tANgKUq8vXHLhT6YhbivgXxn
 ``` -->
 
-## OAuth 2.0 Authentication Workflow
+## Manage Authentication
 
-When an end user first accesses the management user interface and clicks the "Click here to login" button, they are redirected to the OAuth 2.0 provider for authentication. After successfully authenticating, the user is redirected back to RabbitMQ with a valid JWT token. RabbitMQ then validates the token, identifies the user, and extracts their permissions from the JWT token.
+### Create a New User
+
+The Keycloak Administration Console allows you to manage scopes, users and clients. In this section, we will add a new user that is able to access the RabbitMQ event broker.
+
+Navigate to http://localhost:8080. Click on "Administration Console," which will prompt a login screen. Enter the following credentials:
+
+- Username: admin
+- Password: admin
+
+Ensure you are in the ```test``` realm. Then, navifate to "Users" > "Add user." Fill in the fields, then click "Create."
+
+<p align="center"><img src="images/keycloak_user.png" width="900"></p>
+<p align="center"><i>Creating a user in the test realm.</i></p>
+
+After creating the user, navigate to "Credentials" > "Set password," which will prompt you to create a password for the new user.
+
+<p align="center"><img src="images/create_password.png" width="900"></p>
+<p align="center"><i>Creating a password for the new user in the test realm.</i></p>
+
+### Assign Roles to User
+
+The user must be granted the necessary roles. To do this, navigate to "Users" > "Role mapping" > "Assign role". 
+
+<p align="center"><img src="images/role_mapping.png" width="900"></p>
+<p align="center"><i>Role mapping management in Keycloak.</i></p>
+
+Add the following roles to your new user:
+- rabbitmq.tag:administrator
+- rabbitmq.configure:*/*
+- rabbitmq
+- rabbitmq.write:*/*
+- rabbitmq.read:*/*
+
+Once selected, click "Assign."
+
+<p align="center"><img src="images/assign_roles.png" width="900"></p>
+<p align="center"><i>Assign roles to a user in Keycloak.</i></p>
+
+### Set Up Two-Factor Authentication
+
+To set up 2FA using a One-Time Password (OTP), navigate to "Authentication" > "Required actions" > Enable "Configure OTP."
+
+<p align="center"><img src="images/2fa.png" width="900"></p>
+<p align="center"><i>Assign roles to a user in Keycloak.</i></p>
+
+### Configuring OTP
+
+The user must configure their 2FA application. They can do this the first time they access your application, in this case RabbitMQ.
+
+Navigate to http://localhost:15672/#/:
+
+<p align="center"><img src="images/rabbitmq_home.png" width="900"></p>
+<p align="center"><i>The RabbitMQ management user interface.</i></p>
+
+Click on "Click here to log in" button, which will prompt a login screen. Enter the credentials of your new user:
+
+<p align="center"><img src="images/first_user_login.png" width="900"></p>
+<p align="center"><i>Logging into RabbitMQ using Keycloak authentication page.</i></p>
+
+The user will be prompted to set up a 2FA application. Scan the QR code using the Google Authenticator or FreeOTP apps, get a one-time code, and name the device.
 
 > **Note:**
-> The token is passed as a parameter to RabbitMQ commands. However, the connection cannot be used beyond the token’s lifespan, so token refresh is necessary for long-lived connections.
+> Keycloak supports both Google Authenticator and FreeOTP.
 
+<p align="center"><img src="images/auth_setup.png" width="900"></p>
+<p align="center"><i>Prompt to set up 2FA application on Keycloak.</i></p>
 
-<p align="center"><img src="images/rabbitmq-keycloak.png" width="900"></p>
-<p align="center"><i>OAuth 2.0 workflow integrating RabbitMQ as the event broker and Keycloak as the IAM and OAuth 2.0 provider.</i></p>
+Once the user completes the set up, they will have access to RabbitMQ.
+
+<p align="center"><img src="images/2fa_rabbitmq.png" width="900"></p>
+<p align="center"><i>Successful login using 2FA on Keycloak to access RabbitMQ event broker.</i></p>
+
+### Account Management
+
+The Keycloak Account Management user interface enables users to manage their accounts.
+
+Navigate to http://localhost:8080/realms/test/account/#
+
+<p align="center"><img src="images/user_2fa_manage.png" width="900"></p>
+<p align="center"><i>Keycloak account management user interface.</i></p>
+
+To manage 2FA applications, navigate to "Signing in" > "Two-factor authentication."
+
+<p align="center"><img src="images/2fa_settings.png" width="900"></p>
+<p align="center"><i>Keycloak account management user interface.</i></p>
