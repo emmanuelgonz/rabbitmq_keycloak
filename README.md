@@ -47,7 +47,7 @@ make start-keycloak
 To access the Keycloak Administration Console, a management interface, navigate to http://localhost:8080.
 <!-- ![](/images/AdobeStock_144374589.jpeg) -->
 
-<p align="center"><img src="images/administration_console.png" width="800"></p>
+<p align="center"><img src="images/administration_console.png" width="900"></p>
 <p align="center"><i>The Keycloak Administration Console enables administrators to manage scopes, users and clients.</i></p>
 
 Click on "Administration Console," which will prompt a login screen. Enter the following credentials:
@@ -55,7 +55,7 @@ Click on "Administration Console," which will prompt a login screen. Enter the f
 - Username: admin
 - Password: admin
 
-<p align="center"><img src="images/keycloak_login.png" width="800"></p>
+<p align="center"><img src="images/keycloak_login.png" width="900"></p>
 <p align="center"><i>The Keycloak Administration Console login screen.</i></p>
 
 There is a dedicated Keycloak realm called ```test``` that is configured with the following three clients:
@@ -117,14 +117,14 @@ auth_oauth2.https.peer_verification = verify_none
 
 To access the RabbitMq management user interface, navigate to http://localhost:15672/#/.
 
-<p align="center"><img src="images/rabbitmq_home.png" width="800"></p>
+<p align="center"><img src="images/rabbitmq_home.png" width="900"></p>
 <p align="center"><i>The RabbitMQ management user interface.</i></p>
 
 Click on "Click here to log in" button, which will prompt a login screen. Enter the following credentials:
 - Username: rabbit_admin
 - Password: rabbit_admin
 
-<p align="center"><img src="images/rabbitmq_login.png" width="800"></p>
+<p align="center"><img src="images/rabbitmq_login.png" width="900"></p>
 <p align="center"><i>The RabbitMQ management user interface login screen.</i></p>
 
 > **Note:**
@@ -142,7 +142,7 @@ pip install pika requests
 
 After installing the dependencies, you will need to obtain the client secret key. Ensure you are in the ```test``` realm. Navigate to "Clients" > "Credentials". In the "Client secret" section, you will find the client secret key.
 
-<p align="center"><img src="images/keycloak_secret_key.png" width="800"></p>
+<p align="center"><img src="images/keycloak_secret_key.png" width="900"></p>
 <p align="center"><i>Retrieving the client secret key for a specific client in Keycloak.</i></p>
 
 Finally, run the Python sample application using the client ID and client secret key you retrieved above:
@@ -163,5 +163,5 @@ When an end user first accesses the management user interface and clicks the "Cl
 > The token is passed as a parameter to RabbitMQ commands. However, the connection cannot be used beyond the token’s lifespan, so token refresh is necessary for long-lived connections.
 
 
-<p align="center"><img src="images/rabbitmq-keycloak.png" width="800"></p>
+<p align="center"><img src="images/rabbitmq-keycloak.png" width="900"></p>
 <p align="center"><i>OAuth 2.0 workflow integrating RabbitMQ as the event broker and Keycloak as the IAM and OAuth 2.0 provider.</i></p>
