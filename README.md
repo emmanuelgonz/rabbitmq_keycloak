@@ -271,13 +271,43 @@ After installing the dependencies, you will need to obtain the client secret key
 <p align="center"><img src="images/keycloak_secret_key.png" width="900"></p>
 <p align="center"><i>Retrieving the client secret key for a specific client in Keycloak.</i></p>
 
-Finally, run the Python sample application using the client ID and client secret key you retrieved above in the following format: ```bash python3 pika-client/producer.py <client ID> <client secret key>```. For example, run:
+To set up a consumer (subscriber/receiver) sample application, run:
 
 ```bash
-python3 pika-client/producer.py producer kbOFBXI9tANgKUq8vXHLhT6YhbivgXxn
+wget https://raw.githubusercontent.com/emmanuelgonz/rabbitmq_keycloak/main/scripts/receive.py
+python3 receive.py producer kbOFBXI9tANgKUq8vXHLhT6YhbivgXxn 
 ```
 
-#### Secret key & 2FA Using One-Time Password
+Next, we will set up a producer (publisher) sample application using the client ID and client secret key you retrieved above in the following format: ```bash python3 send.py <client ID> <client secret key>```. For example, run:
+
+```bash
+https://raw.githubusercontent.com/emmanuelgonz/rabbitmq_keycloak/main/scripts/send.py
+python3 send.py producer kbOFBXI9tANgKUq8vXHLhT6YhbivgXxn
+```
+
+#### Secret Key & 2FA Using One-Time Password
 
 Previously, we set up an authenticator application, such as Google Authenticator or FreeOTP. In this Python sample application, we will use a client ID, client secret key, and OTP to authenticate a RabbitMQ client connection and publish messages.
 
+To set up a consumer (subscriber/receiver) sample application, run:
+
+```bash
+wget https://raw.githubusercontent.com/emmanuelgonz/rabbitmq_keycloak/main/scripts/receive.py
+python3 receive.py producer kbOFBXI9tANgKUq8vXHLhT6YhbivgXxn 
+```
+
+Next, we will set up a producer (publisher) sample application using the client ID, username, password, client secret key, and OTP. For example, run:
+
+```bash
+python3 send_2fa.py
+```
+
+You will be prompted to input credentials and OTP.
+
+<p align="center"><img src="images/2fa_app.png" width="900"></p>
+<p align="center"><i>A producer (publisher) sample application requesting credentials and OTP.</i></p>
+
+The application will refresh the token every 55 seconds, without requesting the user to re-authenticate.
+
+<p align="center"><img src="images/2fa_app_refresh.png" width="900"></p>
+<p align="center"><i>A producer (publisher) sample application refreshing access token after 55 seconds.</i></p>
