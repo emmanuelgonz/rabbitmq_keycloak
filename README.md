@@ -1,5 +1,19 @@
 # Setting up RabbitMQ on Local Host with Keycloak as OAuth 2.0 server
 
+<p align="center">
+  <img src="images/rabbitmq.png" width="200">
+  <img src="images/keycloak.png" width="200">
+</p>
+
+## Contents
+1. [Background](#background)
+1. [Motivation](#motivation)
+1. [OAuth 2.0 Authentication Workflow](#oauth-20-authentication-workflow)
+1. [Keycloak & RabbitMQ Setup Instructions](#keycloak--rabbitmq-setup-instructions)
+1. [Manage Authentication](#manage-authentication)
+1. [Testing Keycloak Authentication for RabbitMQ](#testing-keycloak-authentication-for-rabbitmq)
+1. [Frequently Asked Questions](#frequently-asked-questions)
+
 ## Background
 
 Originally, NOS-T was designed to utilize the Solace PubSub+ Standard Edition event broker with the Message Queuing Telemetry Transport (MQTT) protocol. However, it has now transitioned to using RabbitMQ with the Advanced Message Queuing Protocol (AMQP) protocol.
