@@ -141,31 +141,6 @@ Click on "Click here to log in" button, which will prompt a login screen. Enter 
 > **Note:**
 > The ```rabbit_admin``` is the single user created in Keycloak with the appropriate scopes to access the management user interface.
 
-#### Access AMQP protocol with Pika
-
-The AMQP protocol can be accessed using the Pika Python library. A Python sample application that receives a token, uses the token to authenticate and publish AMQP messages, and refreshes the token on a live AMQP connection is provided [here](https://github.com/rabbitmq/rabbitmq-oauth2-tutorial/blob/main/pika-client/producer.py).
-
-To run the Python sample application, run:
-
-```bash
-pip install pika requests
-```
-
-After installing the dependencies, you will need to obtain the client secret key. Ensure you are in the ```test``` realm. Navigate to "Clients" > "Credentials". In the "Client secret" section, you will find the client secret key.
-
-<p align="center"><img src="images/keycloak_secret_key.png" width="900"></p>
-<p align="center"><i>Retrieving the client secret key for a specific client in Keycloak.</i></p>
-
-Finally, run the Python sample application using the client ID and client secret key you retrieved above:
-
-```bash
-python3 pika-client/producer.py <client ID> <client secret key>
-```
-
-<!-- ```bash
-python3 pika-client/producer.py producer kbOFBXI9tANgKUq8vXHLhT6YhbivgXxn
-``` -->
-
 ## Manage Authentication
 
 ### Create a New User
@@ -254,7 +229,9 @@ To manage 2FA applications, navigate to "Signing in" > "Two-factor authenticatio
 <p align="center"><img src="images/2fa_settings.png" width="900"></p>
 <p align="center"><i>Keycloak account management user interface sign in settings, including 2FA.</i></p>
 
-## Testing Pika with OTP-based 2FA
+## Testing Keycloak Authentication for RabbitMQ
+
+### Configuring User Roles for OAuth 2.0 and 2FA
 
 To test OTP-based 2FA, you must install dependencies:
 
@@ -270,9 +247,37 @@ Ensure you are in the ```test``` realm. Navigate to "Clients" > select "producer
 Then, make sure to assign your user the ```producer``` role. Navigate to "Users" > select user > "Role mapping" > "Assign role" > check "producer."
 
 <p align="center"><img src="images/select_roles.png" width="900"></p>
-<p align="center"><i>Set the correct roles to your user to enable 2FA using Pika.</i></p>
+<p align="center"><i>Assigning roles to a user to enable successful 2FA using Pika.</i></p>
 
 You will now see the ```producer``` role under your user.
 
 <p align="center"><img src="images/roles.png" width="900"></p>
-<p align="center"><i>Set the correct roles to your user to enable 2FA using Pika.</i></p>
+<p align="center"><i>Assigned roles for a user user to enable 2FA using Pika.</i></p>
+
+### Using Pika Python Client to Access the AMQP Protocol
+
+#### Secret key
+
+The AMQP protocol can be accessed using the Pika Python client. A Python sample application that receives a token, uses the token to authenticate and publish AMQP messages, and refreshes the token on a live AMQP connection is provided [here](https://github.com/rabbitmq/rabbitmq-oauth2-tutorial/blob/main/pika-client/producer.py).
+
+To run the Python sample application, run:
+
+```bash
+pip install pika requests
+```
+
+After installing the dependencies, you will need to obtain the client secret key. Ensure you are in the ```test``` realm. Navigate to "Clients" > "Credentials". In the "Client secret" section, you will find the client secret key.
+
+<p align="center"><img src="images/keycloak_secret_key.png" width="900"></p>
+<p align="center"><i>Retrieving the client secret key for a specific client in Keycloak.</i></p>
+
+Finally, run the Python sample application using the client ID and client secret key you retrieved above in the following format: ```bash python3 pika-client/producer.py <client ID> <client secret key>```. For example, run:
+
+```bash
+python3 pika-client/producer.py producer kbOFBXI9tANgKUq8vXHLhT6YhbivgXxn
+```
+
+#### Secret key & 2FA Using One-Time Password
+
+Previously, we set up an authenticator application, such as Google Authenticator or FreeOTP. In this Python sample application, we will use a client ID, client secret key, and OTP to authenticate a RabbitMQ client connection and publish messages.
+
