@@ -322,4 +322,9 @@ The application will automatically refresh the access token every 55 seconds, wi
 1. 
     Q: I see the following error: ```Access denied: ConnectionClosedByBroker: (530) "NOT_ALLOWED - access to vhost '/' refused for user '4cf4d6b5-09e5-453f-bf22-c8efdc2dd1dc'"```. What could be going on?
 
-    A: It is likely that you did not add the ```producer``` role to your user. Make sure to follow the [section](#configuring-user-roles-for-oauth-2.0-and-2fa)
+    A: It is likely that you did not add the ```producer``` role to your user. Make sure to follow the section [Configuring User Roles for OAuth 2.0 and 2FA](#configuring-user-roles-for-oauth-20-and-2fa).
+
+2. 
+    Q: I want to edit, add, and/or delete my two-factor authenticator application. How can I do that?
+
+    A: You can manage your two-factor authentication applications using the Keycloak Account Management user interface. Refer to the section [Account Management](#account-management).
