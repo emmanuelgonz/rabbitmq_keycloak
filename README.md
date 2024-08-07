@@ -343,3 +343,8 @@ The application will automatically refresh the access token every 55 seconds, wi
     Q: I want to edit, add, and/or delete my two-factor authenticator application. How can I do that?
 
     A: You can manage your two-factor authentication applications using the Keycloak Account Management user interface. Refer to the section [Account Management](#account-management).
+
+## Definitions
+- Producer: A user application that sends messages
+- Queue: A buffer that stores messages
+- Consumer: A user application that receives messages
