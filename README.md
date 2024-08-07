@@ -1,4 +1,10 @@
-# Setting up RabbitMQ on Local Host with Keycloak as OAuth 2.0 server
+# Setting up RabbitMQ on Local Host with Keycloak as OAuth 2.0 Server with Two-Factor Authentication
+
+[RabbitMQ](https://www.rabbitmq.com/) is an open-source message broker that initially supported the Advanced Message Queuing Protocol (AMQP).
+
+[Keycloak](https://www.keycloak.org/) is an open-source Identity and Access Management (IAM) solution that enables single sign-on and supports two-factor authentication.
+
+The Novel Observing Strategies Testbed ([NOS-T](https://github.com/code-lab-org/nost-tools)) is a computational testbed for maturing technologies related to the NASA Novel Observing Strategies thrust.
 
 ## Contents
 1. [Background](#background)
@@ -11,9 +17,9 @@
 
 ## Background
 
-Originally, NOS-T was designed to utilize the Solace PubSub+ Standard Edition event broker with the Message Queuing Telemetry Transport (MQTT) protocol. However, it has now transitioned to using RabbitMQ with the Advanced Message Queuing Protocol (AMQP) protocol.
+Originally, [NOS-T](https://github.com/code-lab-org/nost-tools) was designed to utilize the Solace PubSub+ Standard Edition event broker with the Message Queuing Telemetry Transport (MQTT) protocol. However, it has recently transitioned to using RabbitMQ with the Advanced Message Queuing Protocol (AMQP) protocol.
 
-This page shows how to configure a new standalone RabbitMQ broker on a local host such as a personal machine or a secure local network. The tutorial mostly mirrors the rabbitmq [rabbitmq-oauth2-tutorial guide](https://github.com/rabbitmq/rabbitmq-oauth2-tutorial/tree/main) which provides instructions and tools to get a RabbitMQ message broker Docker container up-and-running on a desktop using Docker Compose, a tool for defining and running multi-container Docker applications. While the capabilities of a locally hosted broker are more limited, it is useful for becoming familiar with the RabbitMQ interface and experimenting with publisher/subscriber behaviors.
+This tutorial covers how to configure a new standalone RabbitMQ broker on a local host such as a personal machine or a secure local network. The tutorial mostly mirrors the rabbitmq [rabbitmq-oauth2-tutorial guide](https://github.com/rabbitmq/rabbitmq-oauth2-tutorial/tree/main) which provides instructions and tools to get a RabbitMQ message broker Docker container up-and-running on a desktop using Docker Compose, a tool for defining and running multi-container Docker applications. While the capabilities of a locally hosted broker are more limited, it is useful for becoming familiar with the RabbitMQ interface and experimenting with publisher/subscriber behaviors.
 
 ## Motivation
 
@@ -27,7 +33,7 @@ When an end user first accesses the management user interface and clicks the "Cl
 > The token is passed as a parameter to RabbitMQ commands. However, the connection cannot be used beyond the token’s lifespan, so token refresh is necessary for long-lived connections.
 
 
-<p align="center"><img src="images/rabbitmq-keycloak.png" width="900"></p>
+<p align="center"><img src="images/rabbitmq-keycloak-update.png" width="900"></p>
 <p align="center"><i>OAuth 2.0 workflow integrating RabbitMQ as the event broker and Keycloak as the IAM and OAuth 2.0 provider.</i></p>
 
 ## Keycloak & RabbitMQ Setup Instructions
