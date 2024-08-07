@@ -1,10 +1,5 @@
 # Setting up RabbitMQ on Local Host with Keycloak as OAuth 2.0 server
 
-<p align="center">
-  <img src="images/rabbitmq_logo_trans.png" height="50">
-  <img src="images/keycloak_logo_trans.png" height="50">
-</p>
-
 ## Contents
 1. [Background](#background)
 1. [Motivation](#motivation)
