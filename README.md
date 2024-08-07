@@ -9,7 +9,7 @@ The Novel Observing Strategies Testbed ([NOS-T](https://github.com/code-lab-org/
 ## Contents
 1. [Background](#background)
 1. [Motivation](#motivation)
-1. [OAuth 2.0 Authentication Workflow](#oauth-20-authentication-workflow)
+1. [Authentication Workflow](#authentication-workflow)
 1. [Keycloak & RabbitMQ Setup Instructions](#keycloak--rabbitmq-setup-instructions)
 1. [Manage Authentication](#manage-authentication)
 1. [Testing Keycloak Authentication for RabbitMQ](#testing-keycloak-authentication-for-rabbitmq)
@@ -25,7 +25,7 @@ This tutorial covers how to configure a new standalone RabbitMQ broker on a loca
 
 The transition from Solace PubSub+ Standard Edition to RabbitMQ was primarily driven by RabbitMQ's advanced queueing capabilities and its open-source nature. Furthermore, updates to NASA's Science Managed Cloud Environment (SMCE) requirements now include two-factor authentication (2FA). Keycloak, an Identity and Access Management (IAM) software, was chosen as the OAuth 2.0 provider due to its open-source nature and robust 2FA capabilities.
 
-## OAuth 2.0 Authentication Workflow
+## Authentication Workflow
 
 When an end user first accesses the management user interface and clicks the "Click here to login" button, they are redirected to the OAuth 2.0 provider for authentication. After successfully authenticating, the user is redirected back to RabbitMQ with a valid JWT token. RabbitMQ then validates the token, identifies the user, and extracts their permissions from the JWT token.
 
