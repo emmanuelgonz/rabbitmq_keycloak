@@ -244,15 +244,18 @@ Ensure you are in the ```test``` realm. Navigate to "Clients" > select "producer
 <p align="center"><img src="images/auth_settings.png" width="900"></p>
 <p align="center"><i>Enabling 2FA for AMQP protocol access using the Python package Pika.</i></p>
 
-Then, make sure to assign your user the ```producer``` role. Navigate to "Users" > select user > "Role mapping" > "Assign role" > check "producer."
+Then, make sure to assign your user the ```producer``` role. Navigate to "Users" > select a user > "Role mapping" > "Assign role" > check the "producer" option > click "Assign" button.
 
 <p align="center"><img src="images/select_roles.png" width="900"></p>
-<p align="center"><i>Assigning roles to a user to enable successful 2FA using Pika.</i></p>
+<p align="center"><i>Assigning roles to a user to enable successful two-factor authentication (2FA) using Pika.</i></p>
 
-You will now see the ```producer``` role under your user.
+You should now see the ```producer``` role under your user.
+
+> **Note:**
+> If you do not assign the ```producer``` role to your user, you will run into errors in subsequent sections of this tutorial. For example, you may see an error like the following: ```Access denied: ConnectionClosedByBroker: (530) "NOT_ALLOWED - access to vhost '/' refused for user '4cf4d6b5-09e5-453f-bf22-c8efdc2dd1dc'"```
 
 <p align="center"><img src="images/roles.png" width="900"></p>
-<p align="center"><i>Assigned roles for a user user to enable 2FA using Pika.</i></p>
+<p align="center"><i>Assigned roles for a user to enable two-factor authentication (2FA) using Pika.</i></p>
 
 ### Using Pika Python Client to Access the AMQP Protocol
 
@@ -302,12 +305,21 @@ Next, we will set up a producer (publisher) sample application using the client 
 python3 send_2fa.py
 ```
 
-You will be prompted to input credentials and OTP.
+For client secret key use: ```kbOFBXI9tANgKUq8vXHLhT6YhbivgXxn```.
+
+You will need to enter your credentials and a OTP when prompted. Use the authenticator app you previously set up, such as Google Authenticator or FreeOTP.
 
 <p align="center"><img src="images/2fa_app.png" width="900"></p>
 <p align="center"><i>A producer (publisher) sample application requesting credentials and OTP.</i></p>
 
-The application will refresh the token every 55 seconds, without requesting the user to re-authenticate.
+The application will automatically refresh the access token every 55 seconds, without the need for the user to re-authenticate.
 
 <p align="center"><img src="images/2fa_app_refresh.png" width="900"></p>
 <p align="center"><i>A producer (publisher) sample application refreshing access token after 55 seconds.</i></p>
+
+## Frequently Asked Questions
+
+1. 
+    Q: I see the following error: ```Access denied: ConnectionClosedByBroker: (530) "NOT_ALLOWED - access to vhost '/' refused for user '4cf4d6b5-09e5-453f-bf22-c8efdc2dd1dc'"```. What could be going on?
+
+    A: It is likely that you did not add the ```producer``` role to your user. Make sure to follow the [section](#configuring-user-roles-for-oauth-2.0-and-2fa)
