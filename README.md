@@ -353,7 +353,7 @@ The application will automatically refresh the access token every 55 seconds, wi
 ## Frequently Asked Questions
 
 1. 
-    Q: I see the following error: ```Access denied: ConnectionClosedByBroker: (530) "NOT_ALLOWED - access to vhost '/' refused for user '4cf4d6b5-09e5-453f-bf22-c8efdc2dd1dc'"```. What could be going on?
+    Q: I see the following error when running the [```send_2fa.py``` sample application](#secret-key--2fa-using-one-time-password): ```Access denied: ConnectionClosedByBroker: (530) "NOT_ALLOWED - access to vhost '/' refused for user '4cf4d6b5-09e5-453f-bf22-c8efdc2dd1dc'"```. What could be going on?
 
     A: It is likely that you did not add the ```producer``` role to your user. Make sure to follow the section [Configuring User Roles for OAuth 2.0 and 2FA](#configuring-user-roles-for-oauth-20-and-2fa).
 
@@ -361,6 +361,9 @@ The application will automatically refresh the access token every 55 seconds, wi
     Q: I want to edit, add, and/or delete my two-factor authenticator application. How can I do that?
 
     A: You can manage your two-factor authentication applications using the Keycloak Account Management user interface. Refer to the section [Account Management](#account-management).
+
+1. 
+    Q: I see the following error in the RabbitMQ management user interface after logging in via Keycloak: ```Not authorized```
 
 ## Definitions
 - Producer: A user application that sends messages
