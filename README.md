@@ -25,15 +25,14 @@ The [Novel Observing Strategies Testbed (NOS-T)](https://github.com/code-lab-org
 
 ## Motivation
 
-The transition from Solace PubSub+ Standard Edition to RabbitMQ was primarily driven by RabbitMQ's advanced queueing capabilities and its open-source nature. Furthermore, updates to NASA's Science Managed Cloud Environment (SMCE) requirements now include two-factor authentication (2FA). Keycloak, an Identity and Access Management (IAM) software, was chosen as the OAuth 2.0 provider due to its open-source nature and robust 2FA capabilities.
+The transition from Solace PubSub+ Standard Edition to RabbitMQ was primarily driven by RabbitMQ's queueing capabilities and open-source nature. Furthermore, updates to NASA's Science Managed Cloud Environment (SMCE) requirements now include two-factor authentication (2FA). Keycloak, an Identity and Access Management (IAM) software, was selected as the OAuth 2.0 provider due to its open-source nature and robust 2FA capabilities.
 
 ## Authentication Workflow
 
-When an end user first accesses the management user interface and clicks the "Click here to login" button, they are redirected to the OAuth 2.0 provider for authentication. After successfully authenticating, the user is redirected back to RabbitMQ with a valid JWT token. RabbitMQ then validates the token, identifies the user, and extracts their permissions from the JWT token.
+When an end user first accesses the RabbitMQ management user interface and clicks the "Click here to login" button, they are redirected to the Keycloak OAuth 2.0 provider for authentication. After successfully authenticating and providing a one-time password (OTP), the user is redirected back to the RabbitMQ management user interface with a valid JSON Web Token (JWT). RabbitMQ then validates the JWT, identifies the user, and extracts their permissions from the JWT.
 
 > **Note:**
-> The token is passed as a parameter to RabbitMQ commands. However, the connection cannot be used beyond the token’s lifespan, so token refresh is necessary for long-lived connections.
-
+> Keycloak access tokens are issued as JWTs, which are passed as parameters to RabbitMQ commands. However, since the connection cannot be maintained beyond the token’s lifespan, refreshing the token is necessary for long-lived connections.
 
 <p align="center"><img src="images/rabbitmq-keycloak-update.png" width="900"></p>
 <p align="center"><i>OAuth 2.0 workflow integrating RabbitMQ as the event broker and Keycloak as the IAM and OAuth 2.0 provider.</i></p>
@@ -50,11 +49,11 @@ This guide requires the following software to be installed and operational:
 - [make](https://www.geeksforgeeks.org/how-to-install-make-on-ubuntu/)
 
 > **Note:**
-> Click on the software name for more directions on their installation.
+> Click on the software name for directions on their installation.
 
 ### Clone GitHub Repository
 
-To begin setting up a RabbitMQ broker, clone the [rabbitmq-oauth2-tutorial](https://github.com/rabbitmq/rabbitmq-oauth2-tutorial/tree/main) GitHub repository:
+To begin setting up a RabbitMQ message broker, clone the [rabbitmq-oauth2-tutorial](https://github.com/rabbitmq/rabbitmq-oauth2-tutorial/tree/main) GitHub repository:
 
 ```bash
 git clone git@github.com:rabbitmq/rabbitmq-oauth2-tutorial.git
@@ -68,12 +67,13 @@ To deploy a Keycloak broker, run:
 make start-keycloak
 ```
 
+The above command will launch Keycloak with all the required scopes, users and clients preconfigured. Keycloak comes configured with its own signing key, and the [rabbitmq.conf](https://github.com/rabbitmq/rabbitmq-oauth2-tutorial/blob/main/conf/keycloak/rabbitmq.conf) used by ```make start-keycloak``` is also configured with the same signing key.
+
 > **Note:**
-> The above command will launch Keycloak with all the required scopes, users and clients preconfigured. Keycloak comes configured with its own signing key, and the [rabbitmq.conf](https://github.com/rabbitmq/rabbitmq-oauth2-tutorial/blob/main/conf/keycloak/rabbitmq.conf) used by ```make start-keycloak``` is also configured with the same signing key.
+>  For details about the ```make start-keycloak``` command, [click here](https://github.com/rabbitmq/rabbitmq-oauth2-tutorial/blob/main/bin/keycloak/deploy).
 
 
 To access the Keycloak Administration Console, a management interface, navigate to http://localhost:8080.
-<!-- ![](/images/AdobeStock_144374589.jpeg) -->
 
 <p align="center"><img src="images/administration_console.png" width="900"></p>
 <p align="center"><i>The Keycloak Administration Console enables administrators to manage scopes, users and clients.</i></p>
@@ -101,9 +101,14 @@ export MODE=keycloak
 make start-rabbitmq
 ```
 
-The first commands directs RabbitMQ to be configured using the [rabbitmq.conf](https://github.com/rabbitmq/rabbitmq-oauth2-tutorial/blob/main/conf/keycloak/rabbitmq.conf) file. Below is an example of the contents of this file:
+The first commands directs RabbitMQ to be configured using the [rabbitmq.conf](https://github.com/rabbitmq/rabbitmq-oauth2-tutorial/blob/main/conf/keycloak/rabbitmq.conf) file. The following section contains an example of the contents of this file.
+
+> **Note:**
+> For details about the ```make start-rabbitmq``` command, [click here](https://github.com/rabbitmq/rabbitmq-oauth2-tutorial/blob/main/bin/deploy-rabbit).
 
 #### RabbitMQ Configuration
+
+The [rabbitmq.conf](https://github.com/rabbitmq/rabbitmq-oauth2-tutorial/blob/main/conf/keycloak/rabbitmq.conf) file provides configurations to set up RabbitMQ. Below is an example of the contents of the file:
 
 ```
 auth_backends.1 = rabbit_auth_backend_oauth2
@@ -121,6 +126,8 @@ auth_oauth2.additional_scopes_key = extra_scope
 auth_oauth2.issuer = https://keycloak:8443/realms/test
 auth_oauth2.https.peer_verification = verify_none
 ```
+
+Each option is explained below:
 
 - Authentication Backend:
     - auth_backends.1 = rabbit_auth_backend_oauth2: This line sets RabbitMQ to use OAuth2 as the authentication backend. This is essential for integrating RabbitMQ with OAuth2 providers like Keycloak.
@@ -305,6 +312,12 @@ https://raw.githubusercontent.com/emmanuelgonz/rabbitmq_keycloak/main/scripts/se
 python3 send.py producer kbOFBXI9tANgKUq8vXHLhT6YhbivgXxn
 ```
 
+<p align="center"><img src="images/send_receive.png" width="900"></p>
+<p align="center"><i>Producer and consumer applications running on two separate terminals. The producers sends messages, which a consumer receives.</i></p>
+
+> **Note:**
+> The application updates the access token every 55 seconds, displaying the terminal message ```Access token refreshed.``` each time it occurs.
+
 #### Secret Key & 2FA Using One-Time Password
 
 Previously, we set up an authenticator application, such as Google Authenticator or FreeOTP. In this Python sample application, we will use a client ID, client secret key, and OTP to authenticate a RabbitMQ client connection and publish messages.
@@ -333,6 +346,9 @@ The application will automatically refresh the access token every 55 seconds, wi
 
 <p align="center"><img src="images/2fa_app_refresh.png" width="900"></p>
 <p align="center"><i>A producer (publisher) sample application refreshing access token after 55 seconds.</i></p>
+
+> **Note:**
+> The application updates the access token every 55 seconds, displaying the terminal message ```Refreshing token.``` each time it occurs.
 
 ## Frequently Asked Questions
 

@@ -48,7 +48,8 @@ for i in range(0, _COUNT_):
     # Update the secret each minute. Supposed that Access Token Lifespan is 1 minute.
     if (datetime.datetime.now() - last_update).total_seconds() > 55:
         last_update = datetime.datetime.now()
-        print('updating secret {}'.format((datetime.datetime.now() - tnow).total_seconds() / 60))
+        # print('updating secret {}'.format((datetime.datetime.now() - tnow).total_seconds() / 60))
+        print('Access token refreshed.')
         connection.update_secret(new_access_token(), 'secret')
 
     main_channel.basic_publish(
