@@ -412,9 +412,24 @@ The receiver will receive these messages. You will see terminal output indicatin
     This error indicates that the role  ```rabbitmq.tag:administrator``` is not assigned to your user.
 
 ## Definitions
+
+### RabbitMQ
+
+- AMQP (Advanced Message Queuing Protocol): The protocol RabbitMQ uses to define how messages are formatted and transmitted between clients and brokers
+- Binding: A link between a queue and an exchange that defines the routing rules for messages
+- Consumer: A user application that receives messages
+- Exchange: A message routing agent that determines how messages are routed to queues based on routing rules
+- Message Broker: Software that enables applications to communicate by sending and receiving messages through queues
 - Producer: A user application that sends messages
 - Queue: A buffer that stores messages
-- Consumer: A user application that receives messages
+- Virtual Host (vhost): A namespace within RabbitMQ that allows for logical separation of resources like exchanges, queues, and users
+
+### Keycloak
+- Client: An application or service that uses Keycloak to authenticate users
+- Identity Provider (IdP): A service that can authenticate a user, such as Google or Facebook, which can be integrated with Keycloak
+- Realm: A space where you manage a set of users, credentials, roles, and groups. Realms are isolated from one another
+- Role: A set of permissions that can be assigned to users or groups to control access to resources
+- User Federation: The ability to connect Keycloak to external user databases like LDAP or Active Directory
 
 ## Important Notes
 - The  ```producer``` role allows a user to send messages (producer).
