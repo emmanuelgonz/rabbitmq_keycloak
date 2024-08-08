@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+# pylint: disable=C0111,C0103,R0205
 import datetime
 import time
 import pika
