@@ -419,4 +419,4 @@ The receiver will receive these messages. You will see terminal output indicatin
 ## Important Notes
 - The  ```producer``` role allows a user to send messages (producer).
 - The ```rabbitmq.tag:administrator``` roles grants a user access to the RabbitMQ management user interface.
-- The ```rabbitmq.read:*/nost/*``` and ```rabbitmq.write:*/nost/*``` client scopes enable the user to read and write to the ```nost``` exchange, respectively.
+- The ```rabbitmq.read:*/nost/*``` and ```rabbitmq.write:*/nost/*``` client scopes enable the user to read and write to the ```nost``` exchange, respectively. The format is the following ```:<vhost>/<exchange>/<routingkey>```
