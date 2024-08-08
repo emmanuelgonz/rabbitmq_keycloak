@@ -58,7 +58,7 @@ main_channel = connection.channel()
 
 # Get the exchange name and topic or queue name from the user
 exchange_name = input("Enter the exchange name: ")
-topic_or_queue = input("Enter the topic or queue name (e.g., topic.topic2.topic3): ")
+topic_or_queue = input("Enter the routing key (topic/queue) (e.g., topic.topic2.topic3): ")
 
 # Declare the topic exchange
 main_channel.exchange_declare(exchange=exchange_name, exchange_type='topic')
