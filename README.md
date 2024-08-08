@@ -325,8 +325,8 @@ Previously, we set up an authenticator application, such as Google Authenticator
 To set up a consumer (subscriber/receiver) sample application, run:
 
 ```bash
-wget https://raw.githubusercontent.com/emmanuelgonz/rabbitmq_keycloak/main/scripts/receive.py
-python3 receive.py producer kbOFBXI9tANgKUq8vXHLhT6YhbivgXxn 
+wget https://raw.githubusercontent.com/emmanuelgonz/rabbitmq_keycloak/main/scripts/receive_2fa.py
+python3 receive_2fa.py producer kbOFBXI9tANgKUq8vXHLhT6YhbivgXxn 
 ```
 
 Next, we will set up a producer (publisher) sample application using the client ID, username, password, client secret key, and OTP. For example, run:
@@ -337,18 +337,23 @@ python3 send_2fa.py
 
 For client secret key use: ```kbOFBXI9tANgKUq8vXHLhT6YhbivgXxn```.
 
-You will need to enter your credentials and a OTP when prompted. Use the authenticator app you previously set up, such as Google Authenticator or FreeOTP.
+When prompted, enter your credentials and OTP. Use the authenticator app you previously set up, such as Google Authenticator or FreeOTP. If authenticated, a successful connection with RabbitMQ will be established, printing "Connection established successfully."
 
-<p align="center"><img src="images/2fa_app.png" width="900"></p>
+<p align="center"><img src="images/auth.png" width="900"></p>
 <p align="center"><i>A producer (publisher) sample application requesting credentials and OTP.</i></p>
 
-The application will automatically refresh the access token every 55 seconds, without the need for the user to re-authenticate.
+When prompted, provide the exchange name and routing key (also known as the topic). The application will publish messages to the specified exchange and topic. You will see terminal output indicating that messages have been sent.
 
-<p align="center"><img src="images/2fa_app_refresh.png" width="900"></p>
-<p align="center"><i>A producer (publisher) sample application refreshing access token after 55 seconds.</i></p>
+<p align="center"><img src="images/topic.png" width="900"></p>
+<p align="center"><i>A producer (publisher) sample application prompting user for exchange name and topic, and refreshing access token after 55 seconds.</i></p>
 
 > **Note:**
 > The application updates the access token every 55 seconds, displaying the terminal message ```Refreshing token.``` each time it occurs.
+
+The receiver will receive these messages. You will see terminal output indicating that messages have been sent.
+
+<p align="center"><img src="images/send_receive_2.png" width="900"></p>
+<p align="center"><i>(Left) A consumer application receives messages from the ```nost``` exchange. (Right) The sample application sends messages to the ```nost``` exchange.</i></p>
 
 ## Frequently Asked Questions
 
