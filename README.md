@@ -11,15 +11,17 @@
 
 ## Background
 
-The [Novel Observing Strategies Testbed (NOS-T)](https://github.com/code-lab-org/nost-tools) was initially designed to use the Message Queuing Telemetry Transport (MQTT) protocol within the [Solace PubSub+ Standard Edition](https://solace.com/products/platform/) message broker. However, it has transitioned to the Advanced Message Queuing Protocol (AMQP) protocol within the [RabbitMQ](https://www.rabbitmq.com/) message broker, incorporating OAuth2.0 via [Keycloak](https://www.keycloak.org/).
+The [Novel Observing Strategies Testbed (NOS-T)](https://github.com/code-lab-org/nost-tools) was initially designed to use the Message Queuing Telemetry Transport (MQTT) protocol within the [Solace PubSub+ Standard Edition](https://solace.com/products/platform/) message broker. However, it has transitioned to the Advanced Message Queuing Protocol (AMQP) protocol within the [RabbitMQ](https://www.rabbitmq.com/) message broker, incorporating OAuth2.0 via [Keycloak](https://www.keycloak.org/). This guide explains how to set up a standalone RabbitMQ message broker on a local host, using the OAuth 2.0 protocol via Keycloak instead of the conventional username/password method. [Docker Compose](https://docs.docker.com/compose/) is employed to run and connect these two Docker applications simultaneously. While a locally hosted broker has its limitations, it provides an opportunity to become familiar with the RabbitMQ and Keycloak interfaces and to experiment with producer/consumer  and authentication behaviors.
 
 | | Description |
 |------|-------------|
 | <img src="images/keycloak_logo_trans.png" width="200"> | <a href="https://www.keycloak.org/" target="_blank">Keycloak</a> is an open-source Identity and Access Management (IAM) solution that enables single sign-on and supports two-factor authentication. |
 | <img src="images/rabbitmq_logo_trans.png" width="200"> | <a href="https://www.rabbitmq.com/" target="_blank">RabbitMQ</a> is an open-source message broker that initially supported the Advanced Message Queuing Protocol (AMQP). |
 | <img src="images/AdobeStock_262485724.jpeg" width="100"> | The <a href="https://github.com/code-lab-org/nost-tools" target="_blank">Novel Observing Strategies Testbed (NOST)</a> is a computational testbed for maturing technologies related to the NASA Novel Observing Strategies thrust. |
+| <img src="images/docker_logo.png" width="100"> | <a href="https://docs.docker.com/compose/" target="_blank">Docker Compose</a> is a tool for defining and running multi-container Docker applications. |
 
-This guide explains how to set up a standalone RabbitMQ message broker on a local host, using the OAuth 2.0 protocol via Keycloak instead of the conventional username/password method. It closely follows the [rabbitmq-oauth2-tutorial guide](https://github.com/rabbitmq/rabbitmq-oauth2-tutorial/tree/main), which provides detailed instructions and tools to launch Docker containers for both RabbitMQ and Keycloak using Docker Compose, a tool for defining and running multi-container Docker applications. While a locally hosted broker has its limitations, it provides an opportunity to become acquainted with the RabbitMQ and Keycloak interfaces and to experiment with producer/consumer  and authentication behaviors.
+> **Note:**
+>  This guide closely follows the [rabbitmq-oauth2-tutorial guide](https://github.com/rabbitmq/rabbitmq-oauth2-tutorial/tree/main), which provides detailed instructions and tools to launch Docker containers for both RabbitMQ and Keycloak using Docker Compose. 
 
 ## Motivation
 
