@@ -363,7 +363,16 @@ The application will automatically refresh the access token every 55 seconds, wi
     A: You can manage your two-factor authentication applications using the Keycloak Account Management user interface. Refer to the section [Account Management](#account-management).
 
 1. 
-    Q: I see the following error in the RabbitMQ management user interface after logging in via Keycloak: ```Not authorized```
+    Q: I see the following error in the RabbitMQ management user interface after logging in via Keycloak: ```Not authorized```. What is causing this?
+
+    A: Check the roles assigned to your user in the Keycloak Administration Console. The user should have each of the following roles assigned: 
+    - ```rabbitmq.tag:administrator```
+    - ```rabbitmq.configure:*/*```
+    - ```rabbitmq```
+    - ```rabbitmq.write:*/*```
+    - ```rabbitmq.read:*/*```
+    
+    This error indicates that the role  ```rabbitmq.tag:administrator``` is not assigned to your user.
 
 ## Definitions
 - Producer: A user application that sends messages
