@@ -8,6 +8,8 @@
   </i>
 </p>
 
+---
+
 <p align="center">
   <img src="images/rabbitmq_logo_trans.png" width="300">
   <br>
@@ -16,6 +18,8 @@
   </i>
 </p>
 
+---
+
 <p align="center">
   <img src="images/AdobeStock_262485724.jpeg" width="280">
   <br>
@@ -23,6 +27,8 @@
     The <a href="https://github.com/code-lab-org/nost-tools" target="_blank">Novel Observing Strategies Testbed (NOST)</a> is a computational testbed for maturing technologies related to the NASA Novel Observing Strategies thrust.
   </i>
 </p>
+
+---
 
 ## Contents
 1. [Background](#background)
