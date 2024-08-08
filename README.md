@@ -1,8 +1,14 @@
 # Setting up RabbitMQ on Local Host with Keycloak as OAuth 2.0 Server with Two-Factor Authentication
 
-[RabbitMQ](https://www.rabbitmq.com/) is an open-source message broker that initially supported the Advanced Message Queuing Protocol (AMQP).
+<p align="center"><img src="images/rabbitmq_logo_trans.png" width="300"></p>
+<p align="center"><i>[RabbitMQ](https://www.rabbitmq.com/) is an open-source message broker that initially supported the Advanced Message Queuing Protocol (AMQP).</i></p>
 
-[Keycloak](https://www.keycloak.org/) is an open-source Identity and Access Management (IAM) solution that enables single sign-on and supports two-factor authentication.
+
+
+<p align="center"><img src="images/keycloak_logo_trans.png" width="300"></p>
+<p align="center"><i>[Keycloak](https://www.keycloak.org/) is an open-source Identity and Access Management (IAM) solution that enables single sign-on and supports two-factor authentication.</i></p>
+
+
 
 The Novel Observing Strategies Testbed ([NOS-T](https://github.com/code-lab-org/nost-tools)) is a computational testbed for maturing technologies related to the NASA Novel Observing Strategies thrust.
 
