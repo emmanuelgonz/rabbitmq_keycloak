@@ -194,11 +194,11 @@ The user must be granted the necessary roles. To do this, navigate to "Users" > 
 <p align="center"><i>Role mapping management in Keycloak.</i></p>
 
 Add the following roles to your new user:
-- rabbitmq.tag:administrator
-- rabbitmq.configure:*/*
-- rabbitmq
-- rabbitmq.write:*/*
-- rabbitmq.read:*/*
+- ```rabbitmq.tag:administrator```: Grants a user access to the RabbitMQ management user interface
+- ```rabbitmq.configure:*/*```: Grants a user access to configure RabbitMQ settings
+- ```rabbitmq```: Grants a user general access to RabbitMQ
+- ```rabbitmq.write:*/*```: Grants a user write permission
+- ```rabbitmq.read:*/*```: Grants a user read permission
 
 Once selected, click "Assign."
 
