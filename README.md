@@ -302,7 +302,7 @@ To set up a consumer (subscriber/receiver) sample application, run:
 
 ```bash
 wget https://raw.githubusercontent.com/emmanuelgonz/rabbitmq_keycloak/main/scripts/receive.py
-python3 receive.py producer kbOFBXI9tANgKUq8vXHLhT6YhbivgXxn 
+python3 receive.py producer kbOFBXI9tANgKUq8vXHLhT6YhbivgXxn
 ```
 
 Next, we will set up a producer (publisher) sample application using the client ID and client secret key you retrieved above in the following format: ```bash python3 send.py <client ID> <client secret key>```. For example, run:
@@ -378,3 +378,7 @@ The application will automatically refresh the access token every 55 seconds, wi
 - Producer: A user application that sends messages
 - Queue: A buffer that stores messages
 - Consumer: A user application that receives messages
+
+## Important Notes
+- The  ```producer``` role allows a user to send messages (producer).
+- The ```rabbitmq.tag:administrator``` roles grants a user access to the RabbitMQ management user interface.
