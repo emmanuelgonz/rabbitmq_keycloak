@@ -18,7 +18,14 @@
   </i>
 </p>
 
-The Novel Observing Strategies Testbed ([NOS-T](https://github.com/code-lab-org/nost-tools)) is a computational testbed for maturing technologies related to the NASA Novel Observing Strategies thrust.
+<p align="center">
+  <img src="images/AdobeStock_262485724.jpeg" width="280">
+</p>
+<p align="center">
+  <i>
+    The <a href="https://github.com/code-lab-org/nost-tools" target="_blank">Novel Observing Strategies Testbed (NOST)</a> is a computational testbed for maturing technologies related to the NASA Novel Observing Strategies thrust.
+  </i>
+</p>
 
 ## Contents
 1. [Background](#background)
