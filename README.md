@@ -11,6 +11,8 @@
 1. [Definitions](#definitions)
 1. [Important Notes](#important-notes)
 
+---
+
 ## Background
 
 The [Novel Observing Strategies Testbed (NOS-T)](https://github.com/code-lab-org/nost-tools) was initially designed to use the Message Queuing Telemetry Transport (MQTT) protocol within the [Solace PubSub+ Standard Edition](https://solace.com/products/platform/) message broker. However, it has transitioned to the Advanced Message Queuing Protocol (AMQP) protocol within the [RabbitMQ](https://www.rabbitmq.com/) message broker, incorporating OAuth2.0 via [Keycloak](https://www.keycloak.org/). This guide explains how to set up a standalone RabbitMQ message broker on a local host, using the OAuth 2.0 protocol via Keycloak instead of the conventional username/password method. [Docker Compose](https://docs.docker.com/compose/) is employed to run and connect these two Docker applications simultaneously. While a locally hosted broker has its limitations, it provides an opportunity to become familiar with the RabbitMQ and Keycloak interfaces and to experiment with producer/consumer  and authentication behaviors.
@@ -25,9 +27,13 @@ The [Novel Observing Strategies Testbed (NOS-T)](https://github.com/code-lab-org
 > **Note:**
 >  This guide closely follows the [rabbitmq-oauth2-tutorial guide](https://github.com/rabbitmq/rabbitmq-oauth2-tutorial/tree/main), which provides detailed instructions and tools to launch Docker containers for both RabbitMQ and Keycloak using Docker Compose. 
 
+---
+
 ## Motivation
 
 The transition from Solace PubSub+ Standard Edition to RabbitMQ was primarily driven by RabbitMQ's queueing capabilities and open-source nature. Furthermore, updates to NASA's Science Managed Cloud Environment (SMCE) requirements now include two-factor authentication (2FA). Keycloak, an Identity and Access Management (IAM) software, was selected as the OAuth 2.0 provider due to its open-source nature and robust 2FA capabilities.
+
+---
 
 ## Authentication Workflow
 
@@ -38,6 +44,8 @@ When an end user first accesses the RabbitMQ management user interface and click
 
 <p align="center"><img src="images/rabbitmq-keycloak-update.png" width="900"></p>
 <p align="center"><i>OAuth 2.0 workflow integrating RabbitMQ as the event broker and Keycloak as the IAM and OAuth 2.0 provider.</i></p>
+
+---
 
 ## Keycloak & RabbitMQ Setup Instructions
 
@@ -167,6 +175,8 @@ Click on "Click here to log in" button, which will prompt a login screen. Enter 
 > **Note:**
 > The ```rabbit_admin``` is the single user created in Keycloak with the appropriate scopes to access the management user interface.
 
+--- 
+
 ## Manage Authentication
 
 ### Create a New User
@@ -277,6 +287,8 @@ To manage 2FA applications, navigate to "Signing in" > "Two-factor authenticatio
 <p align="center"><img src="images/2fa_settings.png" width="900"></p>
 <p align="center"><i>Keycloak account management user interface sign in settings, including 2FA.</i></p>
 
+---
+
 ## Testing Keycloak Authentication for RabbitMQ
 
 ### Configuring User Roles for OAuth 2.0 and 2FA
@@ -379,6 +391,8 @@ The receiver will receive these messages. You will see terminal output indicatin
 <p align="center"><img src="images/send_receive_2.png" width="900"></p>
 <p align="center"><i>(Left) A consumer application receives messages from the ```nost``` exchange. (Right) The sample application sends messages to the ```nost``` exchange.</i></p>
 
+---
+
 ## Frequently Asked Questions
 
 1. 
@@ -411,6 +425,8 @@ The receiver will receive these messages. You will see terminal output indicatin
     
     This error indicates that the role  ```rabbitmq.tag:administrator``` is not assigned to your user.
 
+---
+
 ## Definitions
 
 ### RabbitMQ
@@ -430,6 +446,8 @@ The receiver will receive these messages. You will see terminal output indicatin
 - Realm: A space where you manage a set of users, credentials, roles, and groups. Realms are isolated from one another
 - Role: A set of permissions that can be assigned to users or groups to control access to resources
 - User Federation: The ability to connect Keycloak to external user databases like LDAP or Active Directory
+
+---
 
 ## Important Notes
 - The  ```producer``` role allows a user to send messages (producer).
