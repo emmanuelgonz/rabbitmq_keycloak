@@ -205,6 +205,28 @@ Once selected, click "Assign."
 <p align="center"><img src="images/assign_roles.png" width="900"></p>
 <p align="center"><i>Assign roles to a user in Keycloak.</i></p>
 
+### Updating Client Scopes
+
+Client scopes set restrictions to the topic exchanges within RabbitMQ. The default client scopes include: 
+- ```rabbitmq.write:*/*```: Grants a user write permission
+- ```rabbitmq.read:*/*```: Grants a user read permission
+
+These read and write permissions represent the following:
+- rabbitmq.write:<vhost>/<exchange>/<routingkey>
+- rabbitmq.read:<vhost>/<exchange>/<routingkey>
+
+The default scope, therefore, enables the user to read and write to all vhosts and exhchanges. In some cases, we may want to restrict exhchanges, for example, ```nost```. To do that we must access the Keycloak Account Management page and editing three scopes:
+- From ```rabbitmq.write:*/*``` to ```rabbitmq.write:*/nost/*```
+- From ```rabbitmq.read:*/*``` to ```rabbitmq.read:*/nost/*```
+- From ```rabbitmq.configure:*/*``` to ```rabbitmq.configure:*/nost/*```
+
+You can edit the scope by simply editing the "Name" value.
+
+<p align="center"><img src="images/edit_scope.png" width="900"></p>
+<p align="center"><i>Editing client scope to restrict exchanges.</i></p>
+
+This will restrict the user to posting only to the ```nost``` exchange.
+
 ### Set Up Two-Factor Authentication
 
 To set up 2FA using a One-Time Password (OTP), navigate to "Authentication" > "Required actions" > Enable "Configure OTP."
@@ -361,6 +383,14 @@ The receiver will receive these messages. You will see terminal output indicatin
     Q: I see the following error when running the [```send_2fa.py``` sample application](#secret-key--2fa-using-one-time-password): ```Access denied: ConnectionClosedByBroker: (530) "NOT_ALLOWED - access to vhost '/' refused for user '4cf4d6b5-09e5-453f-bf22-c8efdc2dd1dc'"```. What could be going on?
 
     A: It is likely that you did not add the ```producer``` role to your user. Make sure to follow the section [Configuring User Roles for OAuth 2.0 and 2FA](#configuring-user-roles-for-oauth-20-and-2fa).
+
+1. 
+    Q: I see the following error when running the [```send_2fa.py``` sample application](#secret-key--2fa-using-one-time-password): ```pika.exceptions.ChannelClosedByBroker: (403, "ACCESS_REFUSED - configure access to exchange 'test' in vhost '/' refused for user '4cf4d6b5-09e5-453f-bf22-c8efdc2dd1dc'")```
+
+    A: It is likely that you provided an exchange name other than ```nost```. Recall that during the [Updating Client Scopes](#updating-client-scopes), we restricted user access to only the exchange of ```nost```. You can remove the restriction by setting the client scopes to:
+    - ```rabbitmq.write:*/*/*```
+    - ```rabbitmq.read:*/*/*```
+    - ```rabbitmq.configure:*/*/*```
 
 1. 
     Q: I want to edit, add, and/or delete my two-factor authenticator application. How can I do that?
