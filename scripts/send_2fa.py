@@ -27,7 +27,8 @@ def new_access_token(refresh_token=None):
 
         # Check if the request was successful
         if 'access_token' in token:
-            print(f"Access token retrieved successfully: {token['access_token']}")
+            print(f"\nAccess token retrieved successfully: {token['access_token']}\n")
+            print(f"Access token scope: {token['scope']}\n")
             return token['access_token'], token['refresh_token']
         else:
             # Raise an error if the request was unsuccessful
