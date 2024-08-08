@@ -2,8 +2,7 @@
 
 <p align="center">
   <img src="images/keycloak_logo_trans.png" width="300">
-</p>
-<p align="center">
+  <br>
   <i>
     <a href="https://www.keycloak.org/" target="_blank">Keycloak</a> is an open-source Identity and Access Management (IAM) solution that enables single sign-on and supports two-factor authentication.
   </i>
@@ -11,8 +10,7 @@
 
 <p align="center">
   <img src="images/rabbitmq_logo_trans.png" width="300">
-</p>
-<p align="center">
+  <br>
   <i>
     <a href="https://www.rabbitmq.com/" target="_blank">RabbitMQ</a> is an open-source message broker that initially supported the Advanced Message Queuing Protocol (AMQP).
   </i>
@@ -20,8 +18,7 @@
 
 <p align="center">
   <img src="images/AdobeStock_262485724.jpeg" width="280">
-</p>
-<p align="center">
+  <br>
   <i>
     The <a href="https://github.com/code-lab-org/nost-tools" target="_blank">Novel Observing Strategies Testbed (NOST)</a> is a computational testbed for maturing technologies related to the NASA Novel Observing Strategies thrust.
   </i>
