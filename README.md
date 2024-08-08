@@ -357,7 +357,7 @@ The application will automatically refresh the access token every 55 seconds, wi
 
     A: It is likely that you did not add the ```producer``` role to your user. Make sure to follow the section [Configuring User Roles for OAuth 2.0 and 2FA](#configuring-user-roles-for-oauth-20-and-2fa).
 
-2. 
+1. 
     Q: I want to edit, add, and/or delete my two-factor authenticator application. How can I do that?
 
     A: You can manage your two-factor authentication applications using the Keycloak Account Management user interface. Refer to the section [Account Management](#account-management).
