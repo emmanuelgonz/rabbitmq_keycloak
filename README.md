@@ -8,6 +8,8 @@
 1. [Manage Authentication](#manage-authentication)
 1. [Testing Keycloak Authentication for RabbitMQ](#testing-keycloak-authentication-for-rabbitmq)
 1. [Frequently Asked Questions](#frequently-asked-questions)
+1. [Definitions](#definitions)
+1. [Important Notes](#important-notes)
 
 ## Background
 
@@ -212,8 +214,8 @@ Client scopes set restrictions to the topic exchanges within RabbitMQ. The defau
 - ```rabbitmq.read:*/*```: Grants a user read permission
 
 These read and write permissions represent the following:
-- rabbitmq.write:<vhost>/<exchange>/<routingkey>
-- rabbitmq.read:<vhost>/<exchange>/<routingkey>
+- ```rabbitmq.write:<vhost>/<exchange>/<routingkey>```
+- ```rabbitmq.read:<vhost>/<exchange>/<routingkey>```
 
 The default scope, therefore, enables the user to read and write to all vhosts and exhchanges. In some cases, we may want to restrict exhchanges, for example, ```nost```. To do that we must access the Keycloak Account Management page and editing three scopes:
 - From ```rabbitmq.write:*/*``` to ```rabbitmq.write:*/nost/*```
@@ -417,3 +419,4 @@ The receiver will receive these messages. You will see terminal output indicatin
 ## Important Notes
 - The  ```producer``` role allows a user to send messages (producer).
 - The ```rabbitmq.tag:administrator``` roles grants a user access to the RabbitMQ management user interface.
+- The ```rabbitmq.read:*/nost/*``` and ```rabbitmq.write:*/nost/*``` client scopes enable the user to read and write to the ```nost``` exchange, respectively.
