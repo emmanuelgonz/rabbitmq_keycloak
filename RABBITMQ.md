@@ -26,7 +26,7 @@ The typical RabbitMQ message flow works as follows:
 4. Messages remain in the queue until they are processed by a consumer.
 5. The consumer processes the message.
 
-<p align="center"><img src="images/exchanges-bidings-routing-keys.png" width="900"></p>
+<p align="center"><img src="images/exchanges-bidings-routing-keys.png" width="300"></p>
 <p align="center"><i>A typical RabbitMQ message flow: A producer sends a message, which is eventually processed by a consumer.</i></p>
 
 ---
@@ -45,7 +45,7 @@ Consumers subscribe to topics by creating a queue and setting up a binding with 
 
 The default exchange for topic exchanges in AMQP brokers is `amq.topic`.
 
-<p align="center"><img src="images/topic-exchange.png" width="900"></p>
+<p align="center"><img src="images/topic-exchange.png" width="300"></p>
 <p align="center"><i>A topic exchange where messages are routed to one or many queues based on a match between a message routing key and the routing pattern.</i></p>
 
 **Scenario 1: Consumer A**
