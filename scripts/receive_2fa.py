@@ -3,42 +3,95 @@
 import pika
 import sys
 import requests
+from keycloak.keycloak_openid import KeycloakOpenID
 
-print('pika version: %s' % pika.__version__)
+# def new_access_token():
+#     headers = {'Content-Type': 'application/x-www-form-urlencoded'}
+#     r = requests.post('http://localhost:8080/realms/test/protocol/openid-connect/token', headers=headers,
+#                       data={'client_id': sys.argv[1], 'client_secret': sys.argv[2],
+#                             'grant_type': 'client_credentials'})
 
-# You need Pika 1.3
-# Get the access token
+#     # Check if the request was successful
+#     if r.status_code == 200:
+#         dictionary = r.json()
+#         return dictionary["access_token"]
+#     else:
+#         # Raise an error if the request was unsuccessful
+#         raise Exception(f"Error: The request was unsuccessful with status code {r.status_code}.")
+
 def new_access_token():
-    headers = {'Content-Type': 'application/x-www-form-urlencoded'}
-    r = requests.post('http://localhost:8080/realms/test/protocol/openid-connect/token', headers=headers,
-                      data={'client_id': sys.argv[1], 'client_secret': sys.argv[2],
-                            'grant_type': 'client_credentials'})
+    keycloak_openid = KeycloakOpenID(server_url="http://localhost:8080/",
+                                     client_id=sys.argv[1],
+                                     realm_name="test",
+                                     client_secret_key=sys.argv[2])
+
+    # Get token
+    token = keycloak_openid.token(grant_type='client_credentials')
 
     # Check if the request was successful
-    if r.status_code == 200:
-        dictionary = r.json()
-        return dictionary["access_token"]
+    if 'access_token' in token:
+        return token['access_token']
     else:
         # Raise an error if the request was unsuccessful
-        raise Exception(f"Error: The request was unsuccessful with status code {r.status_code}.")
+        raise Exception("Error: The request was unsuccessful.")
+    
+access_token = new_access_token()
+credentials = pika.PlainCredentials('', access_token)
 
-credentials = pika.PlainCredentials('', new_access_token())
-
-connection = pika.BlockingConnection(pika.ConnectionParameters(
-    virtual_host="/",
-    credentials=credentials))
+try:
+    connection = pika.BlockingConnection(pika.ConnectionParameters(
+        host='localhost',
+        virtual_host="/",
+        port=5672,
+        credentials=credentials))
+    print("Connection established successfully.")
+except pika.exceptions.ProbableAccessDeniedError as e:
+    print(f"Access denied: {e}")
+    sys.exit(1)
 
 main_channel = connection.channel()
 
-# Callback function to handle received messages
+# Get the exchange name and topic or queue name from the user
+exchange_name = input("Enter the exchange name: ")
+binding_keys = input("Enter the routing/binding key (topic) (e.g., topic.topic2.topic3): ").strip()
+print(binding_keys)
+queue_name = 'nost'
+
+main_channel.exchange_declare(exchange=exchange_name, exchange_type='topic')
+
+# result = main_channel.queue_declare('', exclusive=True)
+# queue_name = result.method.queue
+
+if not binding_keys:
+    sys.stderr.write("Usage: %s [binding_key]...\n" % sys.argv[0])
+    sys.exit(1)
+
+for binding_key in binding_keys:
+    main_channel.queue_bind(
+        exchange=exchange_name, queue=queue_name, routing_key=binding_key)
+
+print(' [*] Waiting for logs. To exit press CTRL+C')
+
+
 def callback(ch, method, properties, body):
-    message = body.decode('utf-8')
-    print(f"[x] Received: {message}")
-    # Acknowledge the message after processing
-    ch.basic_ack(delivery_tag=method.delivery_tag)
+    print(f" [x] {method.routing_key}:{body.decode('utf-8')}")
 
-main_channel.basic_qos(prefetch_count=10)  # Increase prefetch count for better handling
-main_channel.basic_consume(queue='nost', on_message_callback=callback, auto_ack=False)  # Turn off auto acknowledgments
 
-print('Waiting for messages. To exit press CTRL+C')
+main_channel.basic_consume(
+    queue=queue_name, on_message_callback=callback, auto_ack=True)
+
 main_channel.start_consuming()
+
+##############################################################################
+# # Callback function to handle received messages
+# def callback(ch, method, properties, body):
+#     message = body.decode('utf-8')
+#     print(f"[x] Received: {message}")
+#     # Acknowledge the message after processing
+#     ch.basic_ack(delivery_tag=method.delivery_tag)
+
+# main_channel.basic_qos(prefetch_count=10)  # Increase prefetch count for better handling
+# main_channel.basic_consume(queue='nost', on_message_callback=callback, auto_ack=False)  # Turn off auto acknowledgments
+
+# print('Waiting for messages. To exit press CTRL+C')
+# main_channel.start_consuming()

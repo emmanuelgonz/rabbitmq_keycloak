@@ -44,8 +44,8 @@ client_secret_key = input("Enter client secret key: ")
 otp = input("Enter OTP: ")
 
 access_token, refresh_token = new_access_token()
-
 credentials = pika.PlainCredentials('', access_token)
+
 try:
     connection = pika.BlockingConnection(pika.ConnectionParameters(
         host='localhost',
@@ -61,15 +61,15 @@ main_channel = connection.channel()
 
 # Get the exchange name and topic or queue name from the user
 exchange_name = input("Enter the exchange name: ")
-topic = input("Enter the routing key (topic) (e.g., topic.topic2.topic3): ")
+binding_keys = input("Enter the routing/binding key (topic) (e.g., topic.topic2.topic3): ")
+queue_name = 'nost'
 
 # Declare the topic exchange
 main_channel.exchange_declare(exchange=exchange_name, exchange_type='topic')
 
 # Declare a queue and bind it to the exchange with the routing key
-queue_name = 'nost'
-main_channel.queue_declare(queue=queue_name)
-main_channel.queue_bind(exchange=exchange_name, queue=queue_name, routing_key=topic)
+main_channel.queue_declare(queue=queue_name, durable=True)
+main_channel.queue_bind(exchange=exchange_name, queue=queue_name, routing_key=binding_keys)
 
 _COUNT_ = 100
 
@@ -89,7 +89,7 @@ for i in range(0, _COUNT_):
 
     main_channel.basic_publish(
         exchange=exchange_name,
-        routing_key=topic,
+        routing_key=binding_keys,
         body=message,
         properties=pika.BasicProperties(content_type='application/json'))
 
