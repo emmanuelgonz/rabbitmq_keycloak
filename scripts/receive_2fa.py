@@ -21,9 +21,9 @@ from keycloak.keycloak_openid import KeycloakOpenID
 
 def new_access_token():
     keycloak_openid = KeycloakOpenID(server_url="http://localhost:8080/",
-                                     client_id=sys.argv[1],
+                                     client_id="producer", #sys.argv[1],
                                      realm_name="test",
-                                     client_secret_key=sys.argv[2])
+                                     client_secret_key="kbOFBXI9tANgKUq8vXHLhT6YhbivgXxn")#sys.argv[2])
 
     # Get token
     token = keycloak_openid.token(grant_type='client_credentials')
@@ -53,20 +53,22 @@ main_channel = connection.channel()
 
 # Get the exchange name and topic or queue name from the user
 exchange_name = input("Enter the exchange name: ")
-binding_keys = input("Enter the routing/binding key (topic) (e.g., topic.topic2.topic3): ").strip()
+binding_keys = input("Enter the routing/binding key (topic) (e.g., topic.topic2.topic3): ").strip().split(' ')
 print(binding_keys)
 queue_name = 'nost'
 
 main_channel.exchange_declare(exchange=exchange_name, exchange_type='topic')
 
-# result = main_channel.queue_declare('', exclusive=True)
+# result = main_channel.queue_declare(queue_name, exclusive=True)
 # queue_name = result.method.queue
+# print(queue_name)
 
 if not binding_keys:
     sys.stderr.write("Usage: %s [binding_key]...\n" % sys.argv[0])
     sys.exit(1)
 
 for binding_key in binding_keys:
+    print(binding_key)
     main_channel.queue_bind(
         exchange=exchange_name, queue=queue_name, routing_key=binding_key)
 
@@ -81,17 +83,3 @@ main_channel.basic_consume(
     queue=queue_name, on_message_callback=callback, auto_ack=True)
 
 main_channel.start_consuming()
-
-##############################################################################
-# # Callback function to handle received messages
-# def callback(ch, method, properties, body):
-#     message = body.decode('utf-8')
-#     print(f"[x] Received: {message}")
-#     # Acknowledge the message after processing
-#     ch.basic_ack(delivery_tag=method.delivery_tag)
-
-# main_channel.basic_qos(prefetch_count=10)  # Increase prefetch count for better handling
-# main_channel.basic_consume(queue='nost', on_message_callback=callback, auto_ack=False)  # Turn off auto acknowledgments
-
-# print('Waiting for messages. To exit press CTRL+C')
-# main_channel.start_consuming()
