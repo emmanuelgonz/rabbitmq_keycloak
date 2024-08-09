@@ -391,6 +391,8 @@ The receiver will receive these messages. You will see terminal output indicatin
 <p align="center"><img src="images/send_receive_2.png" width="900"></p>
 <p align="center"><i>(Left) A consumer application receives messages from the ```nost``` exchange. (Right) The sample application sends messages to the ```nost``` exchange.</i></p>
 
+For more information on the AMQP protocol within RabbitMQ, [click here](./RABBITMQ.md)
+
 ---
 
 ## Frequently Asked Questions
