@@ -1,9 +1,16 @@
 # RabbitMQ
 
+## Contents
+1. [Standard RabbitMQ Message Flow](#standard-rabbitmq-message-flow)
+1. [Exchanges](#exchanges)
+1. [Topics](#topics)
+
 This guide offers a concise overview of RabbitMQ exchanges and topics, designed to assist users of the [Novel Observing Strategies Testbed (NOS-T)](https://github.com/code-lab-org/nost-tools).
 
 > **Note:**
 > This guide closely follows the [CloudAMQP guide](https://www.cloudamqp.com/blog/part4-rabbitmq-for-beginners-exchanges-routing-keys-bindings.html), which provides detailed information about RabbitMQ exchanges, routing keys, and bindings.
+
+---
 
 ## Standard RabbitMQ Message Flow
 
@@ -18,4 +25,12 @@ The typical RabbitMQ message flow works as follows:
 <p align="center"><img src="images/exchanges-bidings-routing-keys.png" width="900"></p>
 <p align="center"><i>A typical RabbitMQ message flow: A producer sends a message, which is eventually processed by a consumer.</i></p>
 
-## 
+---
+
+## Exchanges
+
+---
+
+## Topics
+
+---
