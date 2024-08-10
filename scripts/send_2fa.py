@@ -23,7 +23,7 @@ def new_access_token(refresh_token=None):
                                           username=username, 
                                           password=password, 
                                           totp=otp, 
-                                          scope='openid rabbitmq.read:*/nost/* rabbitmq.write:*/nost/* rabbitmq.configure:*/nost/*')
+                                          scope='openid rabbitmq.read:*/nost/firesat.* rabbitmq.write:*/nost/firesat.* rabbitmq.configure:*/nost/firesat.*')
 
         if 'access_token' in token:
             print(f"\nAccess token retrieved successfully: {token['access_token']}\n")
