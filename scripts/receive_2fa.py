@@ -41,7 +41,7 @@ def new_access_token():
 
     try:
         token = keycloak_openid.token(grant_type='client_credentials',
-                                      scope='openid rabbitmq.read:*/nost/firesat.# rabbitmq.write:*/nost/firesat.# rabbitmq.configure:*/nost/firesat.#')
+                                      scope='openid rabbitmq.read:*/nost/firesat.* rabbitmq.write:*/nost/firesat.* rabbitmq.configure:*/nost/firesat.*')
 
         if 'access_token' in token:
             print(f"\nAccess token retrieved successfully: {token['access_token']}\n")
